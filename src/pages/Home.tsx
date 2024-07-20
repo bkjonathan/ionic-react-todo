@@ -16,7 +16,7 @@ const Home: FC = () => {
   const { setOpen } = useTodo();
   return (
     <IonPage>
-      <Header />
+      <Header title="Todo List" />
       <IonContent fullscreen>
         <AddModal />
         <TodoLists completed={false} />

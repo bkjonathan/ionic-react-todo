@@ -39,12 +39,16 @@ const TodoLists: FC<TodoListsProps> = ({ completed }) => {
             </IonLabel>
           </IonItem>
           <IonItemOptions>
-            <IonItemOption color="danger" onClick={() => deleteTodo(todo.id)}>
+            <IonItemOption
+              color="danger"
+              onClick={() => deleteTodo(todo.id)}
+              expandable
+            >
               <IonIcon icon={trash} />
             </IonItemOption>
           </IonItemOptions>
           <IonItemOptions side="start">
-            <IonItemOption>
+            <IonItemOption color="warning" expandable>
               <IonIcon icon={pencil} />
             </IonItemOption>
           </IonItemOptions>

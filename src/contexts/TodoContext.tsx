@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 export interface Todo {
   id: number;
@@ -15,6 +21,11 @@ interface TodoContextPropsType {
   completeTodo: (id: number) => void;
   setOpen: (isOpen: boolean) => void;
 }
+const defaultTodos: Todo[] = [
+  { id: 1, title: "Complete project setup", completed: false },
+  { id: 2, title: "Review pull requests", completed: false },
+  { id: 3, title: "Plan the next sprint", completed: false },
+];
 
 export const TodoContext = createContext<TodoContextPropsType>({
   todos: [],
@@ -27,8 +38,16 @@ export const TodoContext = createContext<TodoContextPropsType>({
 });
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const localData = localStorage.getItem("todos");
+    return localData ? JSON.parse(localData) : defaultTodos;
+  });
   const [isOpen, setOpen] = useState<boolean>(false);
+
+  // Use useEffect to store todos in localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = (title: string) => {
     const newTodo = { id: Date.now(), title, completed: false };

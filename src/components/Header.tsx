@@ -1,11 +1,14 @@
 import { FC } from "react";
 import { IonHeader, IonSearchbar, IonTitle, IonToolbar } from "@ionic/react";
 
-const Header: FC = () => {
+interface HeaderProps {
+  title: string;
+}
+const Header: FC<HeaderProps> = ({ title }) => {
   return (
     <IonHeader style={{ boxShadow: "none" }}>
       <IonToolbar>
-        <IonTitle>Todo List</IonTitle>
+        <IonTitle>{title}</IonTitle>
       </IonToolbar>
       <IonToolbar>
         <IonSearchbar></IonSearchbar>
