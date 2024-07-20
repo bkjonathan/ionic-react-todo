@@ -1,54 +1,27 @@
 import {
-  IonButton,
-  IonButtons,
   IonContent,
   IonFab,
   IonFabButton,
-  IonHeader,
   IonIcon,
-  IonModal,
   IonPage,
-  IonSearchbar,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { add } from "ionicons/icons";
+import { useTodo } from "../contexts/TodoContext";
+import AddModal from "../components/AddModal";
+import Header from "../components/Header";
+import TodoLists from "../components/TodoLists";
 
 const Home: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const { setOpen } = useTodo();
   return (
     <IonPage>
-      <IonHeader style={{ boxShadow: "none" }}>
-        <IonToolbar>
-          <IonTitle>Todo List</IonTitle>
-        </IonToolbar>
-        <IonToolbar>
-          <IonSearchbar></IonSearchbar>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent fullscreen>
-        <IonModal isOpen={isOpen}>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Modal</IonTitle>
-              <IonButtons slot="end">
-                <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
-              </IonButtons>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent className="ion-padding">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
-              illum quidem recusandae ducimus quos reprehenderit. Veniam,
-              molestias quos, dolorum consequuntur nisi deserunt omnis id illo
-              sit cum qui. Eaque, dicta.
-            </p>
-          </IonContent>
-        </IonModal>
+        <AddModal />
+        <TodoLists />
         <IonFab horizontal="end" vertical="bottom" slot="fixed">
-          <IonFabButton onClick={() => setIsOpen(true)}>
+          <IonFabButton onClick={() => setOpen(true)}>
             <IonIcon icon={add}></IonIcon>
           </IonFabButton>
         </IonFab>

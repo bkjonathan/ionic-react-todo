@@ -8,22 +8,27 @@ export interface Todo {
 
 interface TodoContextPropsType {
   todos: Todo[];
+  isOpen: boolean;
   addTodo: (title: string) => void;
   updateTodo: (id: number, title: string) => void;
   deleteTodo: (id: number) => void;
   completeTodo: (id: number) => void;
+  setOpen: (isOpen: boolean) => void;
 }
 
 export const TodoContext = createContext<TodoContextPropsType>({
   todos: [],
+  isOpen: false,
   addTodo: () => {},
   updateTodo: () => {},
   deleteTodo: () => {},
   completeTodo: () => {},
+  setOpen: () => {},
 });
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [isOpen, setOpen] = useState<boolean>(false);
 
   const addTodo = (title: string) => {
     const newTodo = { id: Date.now(), title, completed: false };
@@ -44,7 +49,15 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
   };
   return (
     <TodoContext.Provider
-      value={{ todos, addTodo, updateTodo, deleteTodo, completeTodo }}
+      value={{
+        todos,
+        addTodo,
+        updateTodo,
+        deleteTodo,
+        completeTodo,
+        setOpen,
+        isOpen,
+      }}
     >
       {children}
     </TodoContext.Provider>
