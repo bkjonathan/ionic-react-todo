@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import {
   IonButton,
   IonButtons,
@@ -16,7 +16,7 @@ import { useTodo } from "../contexts/TodoContext";
 const AddModal: FC = () => {
   const { isOpen, setOpen, addTodo } = useTodo();
   const [title, setTitle] = useState<string>("");
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
     addTodo(title);
