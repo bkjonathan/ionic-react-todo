@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { useTodo } from "../contexts/TodoContext";
+import { FC, useEffect, useState } from "react";
+import { Todo, useTodo } from "../contexts/TodoContext";
 import {
   IonCheckbox,
   IonIcon,
@@ -13,29 +13,33 @@ import {
 import { pencil, trash } from "ionicons/icons";
 import "./TodoLists.css";
 
-const TodoLists: FC = () => {
-  const { todos, completeTodo } = useTodo(); // Assuming useTodo returns an object with a todos array
+interface TodoListsProps {
+  completed: boolean;
+}
+const TodoLists: FC<TodoListsProps> = ({ completed }) => {
+  const { todos, completeTodo, deleteTodo } = useTodo();
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
 
-  const toggleTodoComplete = (id: number) => {
-    // Assuming you have a function to toggle the todo complete status
-    completeTodo(id);
-  };
+  useEffect(() => {
+    setFilteredTodos(todos.filter((todo) => todo.completed === completed));
+  }, [todos, completed]);
+
   return (
     <IonList>
-      {todos.map((todo) => (
+      {filteredTodos.map((todo) => (
         <IonItemSliding key={todo.id}>
           <IonItem>
             <IonCheckbox
               slot="start"
               checked={todo.completed}
-              onIonChange={() => toggleTodoComplete(todo.id)}
+              onIonChange={() => completeTodo(todo.id)}
             />
             <IonLabel className={todo.completed ? "todo-completed" : ""}>
               {todo.title} {todo.completed}
             </IonLabel>
           </IonItem>
           <IonItemOptions>
-            <IonItemOption color="danger">
+            <IonItemOption color="danger" onClick={() => deleteTodo(todo.id)}>
               <IonIcon icon={trash} />
             </IonItemOption>
           </IonItemOptions>

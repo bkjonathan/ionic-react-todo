@@ -19,7 +19,7 @@ const Home: FC = () => {
       <Header />
       <IonContent fullscreen>
         <AddModal />
-        <TodoLists />
+        <TodoLists completed={false} />
         <IonFab horizontal="end" vertical="bottom" slot="fixed">
           <IonFabButton onClick={() => setOpen(true)}>
             <IonIcon icon={add}></IonIcon>
